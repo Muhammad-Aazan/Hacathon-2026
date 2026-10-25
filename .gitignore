@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment variables - NEVER commit these
+.env
+*/.env
+.env.local
+*.env.local
+backend/.env
+
+# Build output
+dist/
+build/
+*/dist/
+*/build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temp / scratch / test files (not needed in repo)
+auth_resp.txt
+cookies.txt
+decoded_pdf_streams.txt
+extracted_pdf.txt
+clean_extracted_pdf.txt
+test-db.js
+decodePdf.mjs
+extractTextOnly.mjs
+readPdf.mjs
+
+# Large image files (keep only the ones in public/)
+1792872767960_Gemini_Generated_Image_npbfujnpbfujnpbf (1).jpg
+UsersDell.git-credentials
