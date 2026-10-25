@@ -24,7 +24,10 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app = express();
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Allow any origin dynamically to support Vercel preview & production URLs
+    callback(null, true);
+  },
   credentials: true,
 }));
 app.use(express.json());
@@ -33,6 +36,16 @@ app.use(cookieParser());
 // Database Connect Call
 connectDB().then(() => {
     createDefaultAdmin();
+}).catch(console.error);
+
+// Ensure DB is connected for serverless invocations
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Routes Setup
@@ -68,6 +81,10 @@ app.use((err, req, res, next) => {
 
 // Server Start
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
     console.log(`🚀 HCM Lite Server running on port ${PORT}`);
-});
+  });
+}
+
+export default app;
