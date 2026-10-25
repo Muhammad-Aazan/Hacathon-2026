@@ -70,6 +70,15 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// Root Route
+app.get('/', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: '🚀 HCM Lite Backend API is running successfully!',
+        health: '/api/health'
+    });
+});
+
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error("Global Error:", err);
